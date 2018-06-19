@@ -1,8 +1,8 @@
-package designpattern.single;
+package designpattern.pattern;
 
 /********************************************************************************
  *
- * Title: 用户管理--单例测试
+ * Title: 伊泽
  *
  * Description:
  *
@@ -10,9 +10,9 @@ package designpattern.single;
  * create date on 2018/6/19
  *
  *******************************************************************************/
-public class ShopCar {
-    public void buy() {
-        System.out.println("买。。");
-
+public class Ez implements  Hero {
+    @Override
+    public void init() {
+        System.out.println("我是伊泽瑞尔。。。");
     }
 }

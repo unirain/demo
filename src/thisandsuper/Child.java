@@ -1,8 +1,8 @@
-package designpattern.single;
+package thisandsuper;
 
 /********************************************************************************
  *
- * Title: 用户管理--单例测试
+ * Title: 
  *
  * Description:
  *
@@ -10,9 +10,7 @@ package designpattern.single;
  * create date on 2018/6/19
  *
  *******************************************************************************/
-public class ShopCar {
-    public void buy() {
-        System.out.println("买。。");
+public class Child extends Father {
+    protected  String username="子类";
 
-    }
 }

@@ -1,8 +1,8 @@
-package designpattern.single;
+package designpattern.pattern;
 
 /********************************************************************************
  *
- * Title: 用户管理--单例测试
+ * Title: 维克托
  *
  * Description:
  *
@@ -10,9 +10,10 @@ package designpattern.single;
  * create date on 2018/6/19
  *
  *******************************************************************************/
-public class ShopCar {
-    public void buy() {
-        System.out.println("买。。");
+public class Vitor implements Hero {
+    @Override
+    public void init() {
+        System.out.println("我是维克托");
 
     }
 }
