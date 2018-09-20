@@ -23,5 +23,6 @@ public class User1 implements View {
         this.message=message;
         System.out.println(username+"获得数据"+message);
     }
+    
 
 }

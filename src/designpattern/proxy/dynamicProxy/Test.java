@@ -1,4 +1,4 @@
-package test;
+package designpattern.proxy.dynamicProxy;
 
 /********************************************************************************
  *
@@ -7,15 +7,16 @@ package test;
  * Description:
  *
  * @author chenlm
- * create date on 2018/6/19
+ * create date on 2018/9/20
  *
  *******************************************************************************/
 public class Test {
     public static void main(String[] args) {
+        DynamicProxyTest dynamicProxyTest=new DynamicProxyTest();
+        TargetWork targetWork=dynamicProxyTest.createProxy();
+        targetWork.show("chenlm");
+        targetWork.testTA("chenlm");
+
 
     }
-
-
-
-
 }

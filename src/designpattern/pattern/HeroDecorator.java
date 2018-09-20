@@ -13,6 +13,7 @@ package designpattern.pattern;
 public abstract class HeroDecorator implements Hero {
     private Hero heroDecorator;
 
+
     public HeroDecorator(Hero hero) {
         this.heroDecorator = hero;
     }

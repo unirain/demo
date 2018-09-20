@@ -13,6 +13,7 @@ package designpattern.responsibility;
 public abstract class Approver {
     protected  Approver nextOne;
     protected void setNext( Approver next){
+        //this一直都是父类的
         this.nextOne=next;
     }
     protected  abstract void  processHandle(int money);

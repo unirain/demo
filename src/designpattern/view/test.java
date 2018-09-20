@@ -21,5 +21,6 @@ public class test {
         subject.addView(two);
         subject.doWord("开始测试下离开");
 
+
     }
 }
