@@ -1,16 +1,19 @@
-package designpattern.pattern;
+package test;
 
 /********************************************************************************
  *
- * Title: 英雄人物抽象
+ * Title: 
  *
  * Description:
  *
  * @author chenlm
- * create date on 2018/6/19
+ * create date on 2018/9/17
  *
  *******************************************************************************/
-public interface Hero {
+public class Ch extends Fa {
+    protected String name;
+    public void set(){
+        this.name="子类";
+    }
 
-    void init();
 }

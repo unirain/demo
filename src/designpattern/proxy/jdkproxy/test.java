@@ -17,8 +17,7 @@ import designpattern.proxy.staticproxy.IuserDaoImpl;
  *******************************************************************************/
 public class test {
     public static void main(String[] args) {
-        IuserDao iuserDao=new IuserDaoImpl();
-        IuserDao proxy=(IuserDao) new ProxyFactory(iuserDao).getProxyInstance();
+        IuserDao proxy= new ProxyFactory<IuserDao>().getProxyInstance();
         proxy.save();
     }
 }

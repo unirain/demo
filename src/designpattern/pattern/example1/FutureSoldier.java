@@ -1,4 +1,4 @@
-package designpattern.pattern;
+package designpattern.pattern.example1;
 
 /********************************************************************************
  *
@@ -10,8 +10,8 @@ package designpattern.pattern;
  * create date on 2018/6/19
  *
  *******************************************************************************/
-public class FutureSoldier extends HeroDecorator{
-    public FutureSoldier(Hero heroDecortor){
+public class FutureSoldier extends HeroDecorator {
+    public FutureSoldier(Hero heroDecortor) {
         super(heroDecortor);
     }
 
@@ -20,6 +20,7 @@ public class FutureSoldier extends HeroDecorator{
         super.init();
         setSkin();
     }
+
     private void setSkin() {
         System.out.println("皮肤:未来战士！");
     }

@@ -14,9 +14,17 @@ public class Test {
     public static void main(String[] args) {
         DynamicProxyTest dynamicProxyTest=new DynamicProxyTest();
         TargetWork targetWork=dynamicProxyTest.createProxy();
+//        targetWork.testTA("chenlm");
         targetWork.show("chenlm");
-        targetWork.testTA("chenlm");
 
+
+    }
+
+    @org.junit.Test
+    public  void test1()throws Exception{
+        DynamicProxyTestEasy dynamicProxyTestEasy=new DynamicProxyTestEasy();
+        TargetWork targetWork=dynamicProxyTestEasy.createProxy();
+        targetWork.show("dd");
 
     }
 }

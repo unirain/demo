@@ -27,6 +27,7 @@ public class DynamicProxyTest {
         @Override
         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
             System.out.println("进入代理");
+            TargetWork targetWork=new TargetWork();
             Object o1 = methodProxy.invokeSuper(o, objects);
             System.out.println("结束代理");
             return o1;

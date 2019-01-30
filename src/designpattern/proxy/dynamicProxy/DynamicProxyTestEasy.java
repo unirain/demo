@@ -26,6 +26,8 @@ public class DynamicProxyTestEasy {
         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
             System.out.println("进入代理");
             Object o1 = methodProxy.invokeSuper(o, objects);
+            //无法使用下面这个，会一直递归
+//            Object o1 = method.invoke(o, objects);
             System.out.println("结束代理");
             return o1;
         }

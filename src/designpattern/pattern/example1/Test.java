@@ -1,4 +1,4 @@
-package designpattern.pattern;
+package designpattern.pattern.example1;
 
 /********************************************************************************
  *
@@ -12,11 +12,11 @@ package designpattern.pattern;
  *******************************************************************************/
 public class Test {
     public static void main(String[] args) {
-        Hero hero=new Ez();
-        Vitor vitor=new Vitor();
-        HeroDecorator decorator=new FutureSoldier(hero);
+        Hero hero = new Ez();
+        Vitor vitor = new Vitor();
+        HeroDecorator decorator = new FutureSoldier(hero);
         decorator.init();
-        HeroDecorator videcorator=new FutureSoldier(vitor);
+        HeroDecorator videcorator = new FutureSoldier(vitor);
         videcorator.init();
     }
 }

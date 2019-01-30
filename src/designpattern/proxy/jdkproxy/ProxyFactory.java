@@ -1,5 +1,8 @@
 package designpattern.proxy.jdkproxy;
 
+import designpattern.proxy.staticproxy.IuserDao;
+import designpattern.proxy.staticproxy.IuserDaoImpl;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -16,20 +19,18 @@ import java.lang.reflect.Proxy;
  * Company:易联众信息技术股份有限公司
  *
  *******************************************************************************/
-public class ProxyFactory implements InvocationHandler {
-    private  Object target;
-    public ProxyFactory(Object target){
-        this.target=target;
-    }
+public class ProxyFactory<T> implements InvocationHandler {
 
-    public Object getProxyInstance(){
-        return Proxy.newProxyInstance(target.getClass().getClassLoader(),target.getClass().getInterfaces(),this);
+    public T getProxyInstance(){
+        return (T)Proxy.newProxyInstance(IuserDao.class.getClassLoader(), new Class[]{IuserDao.class},this);
+
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
         System.out.println("开始代理");
-        Object i=method.invoke(target,args);
+        Object i=method.invoke(this,args);
         System.out.println("结算");
 
         return i;

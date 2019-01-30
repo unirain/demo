@@ -1,8 +1,8 @@
-package designpattern.pattern;
+package designpattern.pattern.example1;
 
 /********************************************************************************
  *
- * Title: 英雄皮肤抽象
+ * Title: 伊泽
  *
  * Description:
  *
@@ -10,16 +10,9 @@ package designpattern.pattern;
  * create date on 2018/6/19
  *
  *******************************************************************************/
-public abstract class HeroDecorator implements Hero {
-    private Hero heroDecorator;
-
-
-    public HeroDecorator(Hero hero) {
-        this.heroDecorator = hero;
-    }
-
+public class Ez implements Hero {
     @Override
     public void init() {
-        heroDecorator.init();
+        System.out.println("我是伊泽瑞尔。。。");
     }
 }
