@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  *******************************************************************************/
 public class ArrayBlockingQueueTest {
     //定义一个阻塞队列
-    private BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(5);
+    private BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(1);
 
     //汽车生产者
     public void produce() throws Exception {
@@ -51,7 +51,7 @@ public class ArrayBlockingQueueTest {
                                 + System.currentTimeMillis());
                         System.out.println("生产完后有汽车："+ getCarNumber()+"辆");
                         //一边生产
-                        Thread.sleep(999);
+//                        Thread.sleep(999);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -76,7 +76,7 @@ public class ArrayBlockingQueueTest {
                         System.out.println("消费完后有汽车："+getCarNumber()+"辆");
                         // 休眠1000ms
                         //一边消费
-                        Thread.sleep(1000);
+//                        Thread.sleep(1000);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -97,6 +97,7 @@ public class ArrayBlockingQueueTest {
 
     @Test
     public void test1(){
+
         new ArrayBlockingQueueTest().test();
     }
 

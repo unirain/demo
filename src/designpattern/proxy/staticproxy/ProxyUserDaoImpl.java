@@ -17,6 +17,8 @@ public class ProxyUserDaoImpl implements IuserDao {
     public ProxyUserDaoImpl(IuserDao iuserDao){
         this.iuserDao=iuserDao;
     }
+
+
     @Override
     public void save() {
         System.out.println("保存之前....");

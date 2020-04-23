@@ -2,18 +2,18 @@ package test;
 
 /********************************************************************************
  *
- * Title: 
+ * Title: 子类
  *
  * Description:
  *
  * @author chenlm
- * create date on 2018/9/17
+ * create date on 2019/12/25
  *
  *******************************************************************************/
-public class Ch extends Fa {
-    protected String name;
-    public void set(){
-        this.name="子类";
+public class GzChild extends gzTest{
+    GzChild(){
+        System.out.println("子类构造");
     }
+
 
 }

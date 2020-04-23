@@ -3,6 +3,8 @@ package lock;
 import jdk.nashorn.internal.ir.CatchNode;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
+
 /********************************************************************************
  *
  * Title: wait notify  
@@ -14,6 +16,10 @@ import org.junit.Test;
  *
  *******************************************************************************/
 public class TheadTest {
+    /**
+     * 调用wait，之后释放锁，让出cpu资源
+     * @param o
+     */
     public void dowait(Object o) {
         synchronized (o) {
             try {
@@ -26,6 +32,10 @@ public class TheadTest {
         }
     }
 
+    /**
+     * 唤醒等待该锁的线程，之后继续执行，直到释放锁
+     * @param o
+     */
     public void synNotifyMethod(Object o) {
         synchronized (o) {
             try {
@@ -47,6 +57,7 @@ public class TheadTest {
         Thread t1 = new Thread(() -> theadTest.dowait(a));
         Thread t2 = new Thread(() -> theadTest.synNotifyMethod(a));
         t1.start();
+        TimeUnit.SECONDS.sleep(3);
         t2.start();
         Thread.sleep(6000);
 
@@ -56,15 +67,20 @@ public class TheadTest {
     public void test1() throws Exception {
         //在A线程调用B线程的时候才有效果
         Thread t1 = new Thread(() -> test12(), "T1");
-        Thread t2 = new Thread(() -> test12(), "T2");
+//        Thread t2 = new Thread(() -> test12(), "T2");
         t1.start();
-        t2.start();
+//        t2.start();
         t1.join();
-        test12();
-
+//        test12();
+        System.out.println("33eeeeeeeeeeee");
 
     }
 
+    /**
+     * 让他中断
+     * 必须是阻塞状态下
+     * @throws Exception
+     */
     @Test
     public void test2() throws Exception {
         Thread t1 = new Thread(() -> test12(), "T1");
@@ -82,7 +98,7 @@ public class TheadTest {
                 System.out.println(Thread.currentThread().getName() + ":" + i);
                 try {
                     if (i==10)
-                    Thread.sleep(10);
+                    TimeUnit.SECONDS.sleep(3);
                 } catch (Exception e) {
                     if (e instanceof InterruptedException) {
                         System.out.println("线程中断");
@@ -97,6 +113,33 @@ public class TheadTest {
             e.printStackTrace();
 
         }
+
+    }
+
+
+    /**
+     * 主线程和子线程测试JOIN
+     * 之后主线程让出cpu等待 子线程处理完
+     * @throws Exception
+     */
+    @Test
+    public void joinTest()throws Exception{
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("我是谁。。");
+                try{
+                    TimeUnit.SECONDS.sleep(10);
+                }catch(Exception e){
+
+                }
+            }
+        });
+        thread.start();
+        System.out.println("开始楼");
+        thread.join();
+        System.out.println("结束");
+
 
     }
 }
