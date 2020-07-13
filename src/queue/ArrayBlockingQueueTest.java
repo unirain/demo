@@ -97,7 +97,6 @@ public class ArrayBlockingQueueTest {
 
     @Test
     public void test1(){
-
         new ArrayBlockingQueueTest().test();
     }
 

@@ -180,7 +180,8 @@ public class ConditionTest {
 
     /**
      * 生产者消费者
-     * 原理：单单靠唤醒和休眠还不够，还需要他们之前的一个共享变量来协调运行的先后顺序，共享变量加唤醒和休眠可以实现控制线程的先后运行顺序
+     * 原理：单单靠唤醒和休眠还不够，
+     * 还需要他们之前的一个共享变量来协调运行的先后顺序，共享变量加唤醒和休眠可以实现控制线程的先后运行顺序
      *
      * @throws Exception
      */
@@ -188,6 +189,17 @@ public class ConditionTest {
     public void test2() throws Exception {
         Thread t1 = new Thread(this::produce);
         Thread t2 = new Thread(this::consume);
+        t1.start();
+        t2.start();
+        TimeUnit.SECONDS.sleep(10);
+
+
+    }
+
+    @Test
+    public void test33() throws Exception {
+        Thread t1 = new Thread(this::waitA);
+        Thread t2 = new Thread(this::waitA);
         t1.start();
         t2.start();
         TimeUnit.SECONDS.sleep(10);

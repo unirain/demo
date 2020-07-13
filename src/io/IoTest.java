@@ -16,14 +16,17 @@ import java.io.*;
  *******************************************************************************/
 public class IoTest {
     private String path="C:\\Users\\chenlm\\Desktop\\in.txt";
+    private String path_new="/Users/chenliming/Desktop/in.jsp";
+    private String path_outNew="/Users/chenliming/Desktop/out.jsp";
 
 
     /**
      * 按照字节读取
+     * 包含数组缓冲
      * @throws Exception
      */
     @Test
-    public  void test1()throws Exception{
+    public  void test()throws Exception{
         File file=new File(path);
         InputStream fileInputStream=new FileInputStream(file);
         //一次读1024
@@ -36,6 +39,43 @@ public class IoTest {
         //流关闭
 
     }
+
+    /**
+     * 按照字节读取
+     * 不使用缓冲
+     * @throws Exception
+     */
+    @Test
+    public  void test22()throws Exception{
+        File file=new File(path_new);
+        //转为输入流
+        InputStream inputStream=new FileInputStream(file);
+        int index;
+        while ((index=inputStream.read())!=-1){
+            System.out.write(index);
+        }
+
+
+    }
+
+    /**使用字节写入另外文件
+     * 写入另外文件
+     * @throws Exception
+     */
+    @Test
+    public  void test212()throws Exception{
+        File file=new File(path_new);
+        //转为输入流
+        InputStream inputStream=new FileInputStream(file);
+        OutputStream outputStream=new FileOutputStream(new File(path_outNew));
+        int index;
+        while ((index=inputStream.read())!=-1){
+            outputStream.write(index);
+        }
+
+
+    }
+
 
     /**
      * 按照字符读取

@@ -51,13 +51,23 @@ public class ThreadPoolTest {
          * 如果有7个任务时，即 大于核心线程2 而队列只能放两个任务，
          * 最大池是4，队列只能放2个，所以有一个要被拒绝
          */
-        for (int i = 1; i <= 7; i++) {
+//        for (int i = 1; i <= 7; i++) {
+//            MyTask task = new MyTask(String.valueOf(i));
+//            executor.execute(task);
+//        }
+
+        /**
+         * 5个任务，大于核心线程2，5-2=3 3个无法放入等待队列，所以拿一个给"核心余下（就是最大-核心）的线程"
+         * 即会启动三个线程来跑
+         */
+        for (int i = 1; i <= 5; i++) {
             MyTask task = new MyTask(String.valueOf(i));
             executor.execute(task);
         }
+
         System.in.read(); //阻塞主线程
         /**
-         * 总结：先看核心 核心满了放队列，队列满了放核心余下的线程，放不下了抛异常
+         * 总结：先看核心 核心满了放队列，队列满了放核心余下（就是最大-核心）的线程，放不下了抛异常
          */
     }
 

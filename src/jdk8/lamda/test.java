@@ -2,6 +2,8 @@ package jdk8.lamda;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 /********************************************************************************
@@ -50,5 +52,24 @@ public class test {
         predicate.test("12");
         System.out.println();
         System.out.println(predicate.negate().test("12222"));
+        Runnable runnable=this::test1;
+    }
+
+    @Test
+    public void test4()throws Exception{
+        String name= "ee";
+        change(name);
+        System.out.println(name);
+    }
+    private void change(String name){
+        name="888";
+//        System.out.println(name);
+    }
+
+    @Test
+    public void test41()throws Exception{
+        List<String> testlist=new ArrayList<>(1);
+        testlist.add("1");
+        testlist.add("2");
     }
 }

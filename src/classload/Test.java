@@ -1,5 +1,7 @@
 package classload;
 
+import test.gzTest;
+
 /********************************************************************************
  *
  * Title: 
@@ -22,5 +24,19 @@ public class Test {
         //为空提到Bootstrap Loader是用C++语言写的，依java的观点来看，
         //逻辑上并不存在Bootstrap Loader的类实体，所以在java程序代码里试图打印出其内容时，我们就会看到输出为null。
         System.out.println(classLoader.getParent().getParent());
+    }
+
+    /**
+     * Class.forName 可以
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void test2()throws Exception{
+      Class<?> d=  Class.forName("test.gzTest",false,this.getClass().getClassLoader());
+      if (d== gzTest.class){
+          System.out.println(true);
+      }
+
+
     }
 }

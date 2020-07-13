@@ -45,7 +45,7 @@ public class Test {
             System.out.println("hah");
             TimeUnit.SECONDS.sleep(1);
             //允许抛出异常
-            if ("abc".equals(a)){
+            if ("abc".equals(a)) {
                 throw new RuntimeException("ces");
             }
 
@@ -61,35 +61,49 @@ public class Test {
     @org.junit.Test
     public void test2() {
         FutureTask<String> futureTask = new FutureTask<>(new TaskTest());
-//        ExecutorService executorService=Executors.newCachedThreadPool();
-//        executorService.submit(futureTask);
-//        System.out.println(futureTask.cancel(true));
-//        Executors.callable()
-        Thread thread = new Thread(futureTask);
-        thread.start();
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService.submit(futureTask);
+        System.out.println(futureTask.cancel(true));
+
+        //
 
 
     }
 
     /**
+     * 使用futruetask 定义runnable返回值
+     *
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void test34() throws Exception {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        Runnable runnable = () -> System.out.println("aaa");
+        FutureTask<String> runnableCall = new FutureTask<>(runnable, "ok");
+        executorService.execute(runnableCall);
+        System.out.println(runnableCall.get());
+    }
+
+
+    /**
      * ExecutorService--newFixedThreadPool
      */
     @org.junit.Test
-    public void test3() throws Exception{
+    public void test3() throws Exception {
         //创建定长的线程池
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         IntStream.range(0, 10).forEach(i -> {
-            System.out.println("正在执行"+i);
+            System.out.println("正在执行" + i);
             Thread thread = new Thread(() -> {
-                try{
+                try {
                     System.out.println("我是线程");
                     TimeUnit.SECONDS.sleep(2);
                     //发现终止对其他线程不影响
-                    if (i==5){
+                    if (i == 5) {
                         throw new RuntimeException("stop");
                     }
 
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
 
                 }

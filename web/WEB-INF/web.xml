@@ -3,4 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <filter>
+        <filter-name>RateLimit</filter-name>
+        <filter-class>guava.limit.RateLimitFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RateLimit</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>LimitRequstServlet</servlet-name>
+        <servlet-class>guava.limit.LimitRequstServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LimitRequstServlet</servlet-name>
+        <url-pattern>/limit</url-pattern>
+    </servlet-mapping>
 </web-app>

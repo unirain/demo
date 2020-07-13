@@ -142,4 +142,42 @@ public class TheadTest {
 
 
     }
+
+    /**
+     * 对象锁的理解
+     *
+     * 对象被改变，则其他线程就可以
+     *
+     */
+    String a="1";
+    @Test
+    public void test98() {
+        synchronized (a) {
+            System.out.println(a);
+            a = "2";
+            try {
+                System.out.println("第一次休眠");
+                TimeUnit.SECONDS.sleep(3);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            synchronized (a) {
+                System.out.println(a);
+                try {
+                    System.out.println("第二次休眠");
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+    @Test
+    public void testth() throws Exception {
+        Thread thread = new Thread(() -> test98());
+        thread.start();
+        test98();
+    }
+
 }

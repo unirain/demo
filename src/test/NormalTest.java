@@ -1,5 +1,6 @@
 package test;
 
+import com.google.common.collect.Lists;
 import designpattern.builder.Person;
 import org.junit.Test;
 
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -226,59 +228,57 @@ public class NormalTest {
         numbers.stream().limit(2).forEach(System.out::println);
 
 
-
-
-
-
     }
+
     @Test
     public void test11() throws Exception {
 
-        Double spgz00 =new BigDecimal("6261.08").multiply(new BigDecimal("12")).setScale(0,BigDecimal.ROUND_HALF_UP).doubleValue();
+        Double spgz00 = new BigDecimal("6261.08").multiply(new BigDecimal("12")).setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue();
         System.out.println(spgz00);
     }
+
     @Test
     public void test12() throws Exception {
-        String a="123";
-        int b=Integer.parseInt(a);
-        Map<Object,String> map=new HashMap<>();
-        map.put(null,"fds");
+        String a = "123";
+        int b = Integer.parseInt(a);
+        Map<Object, String> map = new HashMap<>();
+        map.put(null, "fds");
         System.out.println(map.get(null));
 
 
     }
+
     @Test
-    public void test13() throws Exception{
-       Class c= Class.forName("test.gzTest");
-       System.out.println("---");
-       c.newInstance();
-
-
+    public void test13() throws Exception {
+        Class c = Class.forName("test.gzTest");
+        System.out.println("---");
+        c.newInstance();
 
 
     }
+
     @Test
-    public void test14() throws Exception{
-        Scanner scan=new Scanner(System.in);
-        while(scan.hasNextLine()){
+    public void test14() throws Exception {
+        Scanner scan = new Scanner(System.in);
+        while (scan.hasNextLine()) {
             System.out.println("444");
             //读取键盘输入
-            String line=scan.nextLine();
+            String line = scan.nextLine();
             //将键盘输入的内容输出到SocketChannel中
             System.out.println(line);
 
         }
     }
 
-    public static void main(String[] args) throws Exception{
-        SocketChannel sc= SocketChannel.open(new InetSocketAddress("127.0.0.1",32299));
+    public static void main(String[] args) throws Exception {
+        SocketChannel sc = SocketChannel.open(new InetSocketAddress("127.0.0.1", 32299));
         //设置该sc以非阻塞方式工作
         sc.configureBlocking(false);
         //创建键盘输入流
-        Scanner scan=new Scanner(System.in);
-        while(scan.hasNextLine()){
+        Scanner scan = new Scanner(System.in);
+        while (scan.hasNextLine()) {
             //读取键盘输入
-            String line=scan.nextLine();
+            String line = scan.nextLine();
             //将键盘输入的内容输出到SocketChannel中
             sc.write(Charset.forName("UTF-8").encode(line));
         }
@@ -289,5 +289,50 @@ public class NormalTest {
         Stream.of(1, 2, 3, 4).collect(Collectors.toList()).removeIf(integer -> integer == 4);
 
 //        Stream.of(1, 2, 3, 4).collect(Collectors.toList()).iterator()
+    }
+
+
+    @Test
+    public void test15(){
+        List<String> list= Lists.newLinkedList();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        System.out.println(list.get(2));
+
+    }
+
+    @Test
+    public void test17(){
+        String a=new String("abc");
+        String b=new String("abc");
+        String c="abc";
+        System.out.println(a==c);
+
+    }
+    @Test
+    public void test27(){
+        int a=10;
+        Integer b=new Integer(10);
+        Integer c=new Integer(10);
+        System.out.println(a==b);
+        System.out.println(b==c);
+        System.out.println(b.getClass());
+
+
+
+    }
+
+
+
+
+
+    @Test
+    public void test87()throws Exception{
+        System.out.println(this.getClass());
+        System.out.println(this.getClass().getClassLoader());
+        System.out.println(this.getClass().getClassLoader().getParent());
+        System.out.println(this.getClass().getClassLoader().getParent().getParent());
+
     }
 }
