@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
  *******************************************************************************/
 public class RedisUtil {
     private static String ip = "127.0.0.1";
-    private static int port = 6379;
+    private static int port = 45004;
     private static Jedis jedis;
     private static Jedis jedis2;
 
@@ -65,6 +65,12 @@ public class RedisUtil {
         System.out.println(jedis.get("clm"));
 
 
+    }
+    @Test
+    public void test11() throws Exception {
+        //初始化为0
+        jedis.set("aa", null);
+        System.out.println(jedis.get("aa"));
     }
 
     /**
@@ -171,6 +177,7 @@ public class RedisUtil {
             transaction.set("clm", "很帅");
             System.out.println(transaction.get("clm"));
             List<Object> objectList = transaction.exec();
+            System.out.println(jedis.get("clm"));
             System.out.println("end");
         });
 
@@ -185,15 +192,16 @@ public class RedisUtil {
         });
         t1.start();
         t2.start();
-        IntStream.range(0, 5).forEach((i) -> {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-                System.out.println(jedis.get("clm"));
-            } catch (Exception e) {
-                e.getStackTrace();
-
-            }
-        });
+//        IntStream.range(0, 5).forEach((i) -> {
+//            try {
+//                TimeUnit.SECONDS.sleep(1);
+//                System.out.println(jedis.get("clm"));
+//            } catch (Exception e) {
+//                e.getStackTrace();
+//
+//            }
+//        });
+        System.in.read();
 
 
     }

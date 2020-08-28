@@ -277,6 +277,23 @@ public class NewTest {
     /**
      * Streams
      *
+     *  for  flatMap
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testMap() throws Exception {
+        Person person1=new Person();
+        person1.username="1";
+        Person person2=new Person();
+        person2.username="2";
+        Stream.of(person1,person2).flatMap(person -> Stream.of(person.username)).forEach(System.out::print);
+
+    }
+
+    /**
+     * Streams
+     *
      * @throws Exception
      */
     @Test
@@ -285,6 +302,7 @@ public class NewTest {
         list.stream().map(a -> Integer.valueOf(a) * 2).forEach(System.out::println);
 //        list.stream().flatMap()
     }
+
 
     /**
      * Map新特性
@@ -317,6 +335,7 @@ public class NewTest {
     public void test8() throws Exception {
         Collection<String> list = Arrays.asList("22", "22", "53", "11");
         List<String> list1 = list.stream().filter((s) -> Integer.valueOf(s) > 20).collect(Collectors.toList());
+
 
     }
 

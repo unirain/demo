@@ -29,6 +29,7 @@ public class DynamicProxyTest {
             System.out.println("进入代理");
             TargetWork targetWork=new TargetWork();
             Object o1 = methodProxy.invokeSuper(o, objects);
+//            Object o1 = method.invoke(o, objects);//无限递归，原因就是这个object是个代理类
             System.out.println("结束代理");
             return o1;
         }

@@ -37,13 +37,20 @@ public class Test {
         }
 
     }
+    @org.junit.Test
+    public void test111() throws Exception {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        //异步
+        Future future = executorService.submit(new TaskTest());
+
+    }
 
     class TaskTest implements Callable<String> {
         @Override
         public String call() throws Exception {
             String a = "abc";
             System.out.println("hah");
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(3);
             //允许抛出异常
             if ("abc".equals(a)) {
                 throw new RuntimeException("ces");

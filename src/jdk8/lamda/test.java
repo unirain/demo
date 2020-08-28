@@ -2,9 +2,10 @@ package jdk8.lamda;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /********************************************************************************
  *
@@ -71,5 +72,17 @@ public class test {
         List<String> testlist=new ArrayList<>(1);
         testlist.add("1");
         testlist.add("2");
+    }
+
+    @Test
+    public void test411()throws Exception{
+        String a="abc";
+        String b="bbcd";
+        String c="cb";
+        TreeMap<String,String> map=new TreeMap<>();
+        map.put(c,null);
+        map.put(b,null);
+        map.put(a,null);
+        System.out.println(map);
     }
 }

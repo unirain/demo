@@ -301,6 +301,10 @@ public class NormalTest {
         System.out.println(list.get(2));
 
     }
+    @Test
+    public void  test()throws Exception{
+        System.out.println(1.13-0.82);
+    }
 
     @Test
     public void test17(){
