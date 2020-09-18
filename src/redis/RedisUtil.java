@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
  *******************************************************************************/
 public class RedisUtil {
     private static String ip = "127.0.0.1";
-    private static int port = 45004;
+    private static int port = 6379;
     private static Jedis jedis;
     private static Jedis jedis2;
 

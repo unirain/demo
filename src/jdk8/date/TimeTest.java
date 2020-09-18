@@ -98,8 +98,8 @@ public class TimeTest {
     @Test
     public void test5() throws Exception {
         //新日期转老日期
-//        Date now=Date.from(Instant.from(LocalDate.now()));//允许接收一个temporal为入参
-        Date now = Date.from(Instant.now());
+        Date now=Date.from(Instant.from(LocalDate.now()));//允许接收一个temporal为入参
+//        Date now = Date.from(Instant.now());
 
         //旧转新
         Date t = new Date();
