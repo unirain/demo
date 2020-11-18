@@ -37,6 +37,7 @@ public class Test {
         }
 
     }
+
     @org.junit.Test
     public void test111() throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -119,5 +120,36 @@ public class Test {
         });
         TimeUnit.SECONDS.sleep(10);
     }
+
+
+    /**
+     * 用户线程和守护线程
+     *
+     * 守护线程在主线程退出后 停止
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void test31() throws Exception {
+        Thread thread = new Thread(() -> {
+            while (true) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("----睡眠一秒-----");
+            }
+        });
+        //默认为false,设置为false代表非守护线程,true为守护线程,守护线程在主方法结束时候结束
+//        thread.setDaemon(true);
+        thread.start();
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("主线程over");
+    }
+
 
 }

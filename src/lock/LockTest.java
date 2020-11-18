@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * Title: 锁定测试
  *
- * Description: lock 必须紧跟着try catch代码快，防止异常无法解锁
+ * Description: lock 必须紧跟着try catch代码快，防止异常无法解锁   入了多少此锁，就释放多少次
  *
  * @author chenlm
  * create date on 2018/12/25

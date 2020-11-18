@@ -339,4 +339,11 @@ public class NormalTest {
         System.out.println(this.getClass().getClassLoader().getParent().getParent());
 
     }
+
+    @Test
+    public void t1est87()throws Exception{
+        System.out.println(10*24*60*60*1000);
+    }
+
+
 }

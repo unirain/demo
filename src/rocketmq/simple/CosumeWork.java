@@ -4,6 +4,7 @@ import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.*;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.junit.Test;
 
@@ -62,17 +63,20 @@ public class CosumeWork {
      *
      * @throws Exception
      */
-    @Test
-    public void ConsumerInOrder() throws Exception {
+//    @Test
+    public void ConsumerInOrder(String tag) throws Exception {
         DefaultMQPushConsumer defaultMQPushConsumer = new DefaultMQPushConsumer("my-order-consumer");
         defaultMQPushConsumer.setNamesrvAddr("localhost:9876");
+        //不同的实例名 也就是说不同的客户端ID，否则启动多个会报错
+        Random random = new Random();
+        defaultMQPushConsumer.setInstanceName("c"+random.nextInt(10));
         /**
          * 设置Consumer第一次启动 是从队列头部开始消费还是队列尾部开始消费
          * 如果非第一次启动，那么按照上次消费的位置继续消费
          */
         defaultMQPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         //队列订阅
-        defaultMQPushConsumer.subscribe("UC-Topic-Order", "TagA || TagC || TagD");
+        defaultMQPushConsumer.subscribe("UC-Topic-Order", tag);
         defaultMQPushConsumer.registerMessageListener(new MessageListenerOrderly() {
             Random random = new Random();
 
@@ -92,8 +96,73 @@ public class CosumeWork {
         });
         defaultMQPushConsumer.start();
         System.out.println("consumer start..");
-        TimeUnit.SECONDS.sleep(10000L);
+//        TimeUnit.SECONDS.sleep(10000L);
 
+    }
+
+    @Test
+    public void  ConsumerInOrderThread()throws Exception{
+        Thread t1=new Thread(()->{
+            try{
+                ConsumerInOrder("TagC");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        });
+        Thread t2=new Thread(()->{
+            try{
+                ConsumerInOrder("TagA");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        });
+        Thread t3=new Thread(()->{
+            try{
+                ConsumerInOrder("TagD");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        });
+//        t1.start();
+        t2.start();
+        t3.start();
+        TimeUnit.SECONDS.sleep(10000L);
+    }
+
+
+    /**
+     * 测试 yealink-pub 多实例  在集群消费和广播消费的差异
+     * @throws Exception
+     */
+    @Test
+    public void ConsumerInOrder1() throws Exception {
+        DefaultMQPushConsumer defaultMQPushConsumer = new DefaultMQPushConsumer("pub-rocket_uc-rocket-topic-pub_cluster");
+        defaultMQPushConsumer.setNamesrvAddr("localhost:9876");
+        //不同的实例名 也就是说不同的客户端ID，否则启动多个会报错
+        Random random = new Random();
+        defaultMQPushConsumer.setInstanceName("c"+random.nextInt(10));
+//        defaultMQPushConsumer.setMessageModel(MessageModel.BROADCASTING);
+        defaultMQPushConsumer.setMessageModel(MessageModel.CLUSTERING);
+        /**
+         * 设置Consumer第一次启动 是从队列头部开始消费还是队列尾部开始消费
+         * 如果非第一次启动，那么按照上次消费的位置继续消费
+         */
+        defaultMQPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+        //队列订阅
+        defaultMQPushConsumer.subscribe("PS-uc-rocket-topic-pub", "*");
+        defaultMQPushConsumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
+                for (MessageExt msg : list) {
+                    System.out.println("consumeThread=" + Thread.currentThread().getName() + "queueId=" + msg.getQueueId() + ", content:" + new String(msg.getBody()) + msg.getKeys());
+                }
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            }
+
+        });
+        defaultMQPushConsumer.start();
+        TimeUnit.SECONDS.sleep(1000l);
+        System.out.println("consumer start..");
 
     }
 }
