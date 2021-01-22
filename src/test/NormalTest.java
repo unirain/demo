@@ -344,6 +344,19 @@ public class NormalTest {
     public void t1est87()throws Exception{
         System.out.println(10*24*60*60*1000);
     }
+    @Test
+    public void should_1(){
+        long time=System.currentTimeMillis();
+        System.out.println(String.valueOf(time).length());
+
+    }
+    @Test
+    public void should_map(){
+        Map<String,String> map=new HashMap<>();
+        System.out.println(map.putIfAbsent("1","1"));
+        System.out.println(map.putIfAbsent("1","1"));
+
+    }
 
 
 }

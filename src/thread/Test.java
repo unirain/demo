@@ -1,5 +1,7 @@
 package thread;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.*;
 import java.util.stream.IntStream;
 
@@ -26,11 +28,14 @@ public class Test {
         Future future = executorService.submit(new TaskTest());
         //确认异步
         System.out.println("被调用");
-        TimeUnit.SECONDS.sleep(3);
+//        TimeUnit.SECONDS.sleep(3);
         //阻塞获取
         try {
+            System.out.println(future.isDone());
+            System.out.println("--");
 
             System.out.println(future.get());
+            System.out.println("end");
         } catch (Exception e) {
             //捕获get异常
             System.out.println(e.getMessage());
@@ -51,7 +56,7 @@ public class Test {
         public String call() throws Exception {
             String a = "abc";
             System.out.println("hah");
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(4);
             //允许抛出异常
             if ("abc".equals(a)) {
                 throw new RuntimeException("ces");
@@ -124,8 +129,9 @@ public class Test {
 
     /**
      * 用户线程和守护线程
-     *
+     * <p>
      * 守护线程在主线程退出后 停止
+     *
      * @throws Exception
      */
     @org.junit.Test
@@ -149,6 +155,28 @@ public class Test {
             e.printStackTrace();
         }
         System.out.println("主线程over");
+    }
+
+    /**
+     * 执行完就返回
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void testInvokeAny() throws Exception {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        Set<Callable<String>> tskSet = new HashSet<>();
+        tskSet.add(() -> {
+            System.out.println("Task 1 ..........running.......");
+            TimeUnit.SECONDS.sleep(5);
+            return null;
+        });
+        tskSet.add(() -> {
+            System.out.println("Task 2 ..........running.......");
+            TimeUnit.SECONDS.sleep(6);
+            return "2ok";
+        });
+        String result = executorService.invokeAny(tskSet);
+        System.out.println(result);
     }
 
 

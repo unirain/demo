@@ -19,4 +19,7 @@
         <servlet-name>LimitRequstServlet</servlet-name>
         <url-pattern>/limit</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>/websocketChat.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
