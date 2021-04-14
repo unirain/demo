@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -357,6 +358,45 @@ public class NormalTest {
         System.out.println(map.putIfAbsent("1","1"));
 
     }
+    @Test
+    public void should_range() {
+        IntStream.range(1,10).filter(i->i>5).forEach(System.out::print);
+
+        for (int i = 0; i < 10; i++) {
+            if (i==5){
+                break;
+            }
+
+        }
+
+    }
+
+    @Test
+    public void should_pow(){
+        Object result=Math.pow(6, 0.61) / (4 + 5);
+        System.out.println(result);
+
+
+    }
+
+    @Test
+    public void should_tes(){
+        String re="下'";
+        String name="name";
+        String result=String.format("g.V().has('%s','%s').limit(200)", name, re);
+        System.out.println(result);
+
+
+    }
+
+    @Test
+    public void should_tes1(){
+       String a="a,";
+       List<String> ol=Arrays.asList(a.split(","));
+       ol.forEach(System.out::println);
+    }
+
+
 
 
 }

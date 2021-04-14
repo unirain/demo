@@ -5,6 +5,7 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
@@ -65,7 +66,7 @@ public class RedisLockV2 {
      * @return
      */
     public Jedis getJedis() {
-        JedisPool jedisPool = new JedisPool("localhost", 45004);
+        JedisPool jedisPool = new JedisPool("192.168.3.1", 6379);
         return jedisPool.getResource();
     }
 
@@ -87,12 +88,12 @@ public class RedisLockV2 {
                 }
                 //尝试判断过期时间
                 String currentValueStr = getJedis().get(lockKey);
-                if (currentValueStr==null && Long.parseLong(currentValueStr) < System.currentTimeMillis()) {
+                if (currentValueStr==null || Long.parseLong(currentValueStr) < System.currentTimeMillis()) {
                     //已过期
                     //获取旧值，此时可能会有两个线程进来
                     String oldValue = getJedis().getSet(lockKey, String.valueOf(expires));
                     //防止两个线程进来，在判断一次,旧值可能为空，也就是锁可能刚好释放了
-                    if (currentValueStr.equals(oldValue) || oldValue == null) {
+                    if (oldValue == null|| Objects.equals(currentValueStr, oldValue)) {
                         return true;
                     }
                 }
@@ -117,9 +118,9 @@ public class RedisLockV2 {
         try {
             //保证在当前有效期内
             String keyValue = getJedis().get(lockKey);
-            if (keyValue == null && Long.parseLong(keyValue) < System.currentTimeMillis()) {
+            if (keyValue != null && Long.parseLong(keyValue) > System.currentTimeMillis()) {
                 //在有效期内
-                getJedis().del(keyValue);
+                getJedis().del(lockKey);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,7 +132,8 @@ public class RedisLockV2 {
     public void test1()throws Exception{
         RedisLockV2 redisLockV2=new RedisLockV2();
         redisLockV2.setLockKey("chenlm-test");
-        redisLockV2.setExpireMsecs(15*1000);
+//        redisLockV2.setExpireMsecs(15*1000);
+        redisLockV2.setExpireMsecs(60*1000);
         redisLockV2.setTimeoutMsecs(10);
         IntStream.range(1,10).forEach(i->{
             Thread thread=new Thread(()->{
