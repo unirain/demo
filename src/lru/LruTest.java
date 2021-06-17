@@ -24,7 +24,19 @@ public class LruTest {
         lruCache.put("4","4");
 
         System.out.println(lruCache.get("2"));
+    }
 
+    @Test
+    public void should_linkhashcache(){
+        LruLinkHashCache<String,String> lruLinkHashCache=new LruLinkHashCache<>(3);
 
+        lruLinkHashCache.put("1","1");
+        lruLinkHashCache.put("2","2");
+        lruLinkHashCache.put("3","3");
+        lruLinkHashCache.put("4","4");
+
+        System.out.println(lruLinkHashCache.get("3"));
+        System.out.println(lruLinkHashCache.get("1"));
+        System.out.println(lruLinkHashCache.get("2"));
     }
 }
