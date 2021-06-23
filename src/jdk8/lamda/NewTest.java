@@ -1,5 +1,6 @@
 package jdk8.lamda;
 
+import com.google.common.collect.Lists;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -198,10 +199,10 @@ public class NewTest {
      */
     @Test
     public void testSupplier() {
-        Supplier<Exception> s1=()->new Exception("我是异常对象");
+        Supplier<Exception> s1 = () -> new Exception("我是异常对象");
         System.out.println(s1.get());
 
-        Supplier<String> s2=()->new String("我是字符对象");
+        Supplier<String> s2 = () -> new String("我是字符对象");
         System.out.println(s2.get());
 
     }
@@ -276,18 +277,18 @@ public class NewTest {
 
     /**
      * Streams
-     *
-     *  for  flatMap
+     * <p>
+     * for  flatMap
      *
      * @throws Exception
      */
     @Test
     public void testMap() throws Exception {
-        Person person1=new Person();
-        person1.username="1";
-        Person person2=new Person();
-        person2.username="2";
-        Stream.of(person1,person2).flatMap(person -> Stream.of(person.username)).forEach(System.out::print);
+        Person person1 = new Person();
+        person1.username = "1";
+        Person person2 = new Person();
+        person2.username = "2";
+        Stream.of(person1, person2).flatMap(person -> Stream.of(person.username)).forEach(System.out::print);
 
     }
 
@@ -359,4 +360,82 @@ public class NewTest {
         P createPerson(String username, String password);
 
     }
+
+
+    //按每3个一组分割
+    private static final Integer MAX_NUMBER = 200;
+
+    /**
+     * 计算切分次数
+     */
+    private static Integer countStep(Integer size) {
+        return (size + MAX_NUMBER - 1) / MAX_NUMBER;
+    }
+
+    public void testSplit() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
+        int limit = countStep(list.size());
+        List<List<Integer>> mglist = new ArrayList<>();
+        Stream.iterate(0, n -> n + 1).limit(limit).forEach(i -> {
+            mglist.add(list.stream().skip(i * MAX_NUMBER).limit(MAX_NUMBER).collect(Collectors.toList()));
+        });
+
+        System.out.println(mglist);
+
+        //方法二：获取分割后的集合
+        List<List<Integer>> splitList = Stream.iterate(0, n -> n + 1).limit(limit).parallel().map(a -> list.stream().skip(a * MAX_NUMBER).limit(MAX_NUMBER).parallel().collect(Collectors.toList())).collect(Collectors.toList());
+
+        System.out.println(splitList);
+    }
+
+    @Test
+    public void should_09() {
+        Stream.iterate(0, n -> n + 1).limit(6).forEach(System.out::println);
+
+    }
+
+    @Test
+    public void should_reduce() {
+        //Reduce Array to String.
+        String[] array = {"Mohan", "Sohan", "Mahesh"};
+        Arrays.stream(array).reduce((x, y) -> x + "," + y).ifPresent(s -> System.out.println("Array to String: " + s));
+        //Reduce List to String.
+        List<String> list = Arrays.asList("Mohan", "Sohan", "Mahesh");
+        list.stream().reduce((x, y) -> x + "," + y).ifPresent(s -> System.out.println("List to String: " + s));
+
+    }
+
+
+    @Test
+    public void should_sub() {
+        List<String> sourceList = Lists.newArrayList();
+        IntStream.range(0, 2000).mapToObj(String::valueOf).forEach(sourceList::add);
+        List<List<String>> result = Lists.newArrayList();
+        long timebegin=System.currentTimeMillis();
+
+        //over time1
+        int startIndex = 0;
+        int endIndex;
+        int limit = 200;
+        int size = sourceList.size();
+        while (startIndex < size) {
+            endIndex = startIndex + limit;
+            endIndex = Math.min(endIndex, size);
+            List<String> subList = sourceList.subList(startIndex, endIndex);
+            result.add(subList);
+            startIndex = endIndex;
+        }
+
+        //over time10
+//        int limit = countStep(sourceList.size());
+//        IntStream.range(0,limit).forEach(i -> {
+//            result.add(sourceList.stream().skip(i * MAX_NUMBER).limit(MAX_NUMBER).collect(Collectors.toList()));
+//        });
+
+        System.out.println("over time"+  (System.currentTimeMillis()-timebegin));
+
+
+    }
+
+
 }
