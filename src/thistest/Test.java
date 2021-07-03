@@ -1,5 +1,11 @@
 package thistest;
 
+import cn.hutool.core.math.MathUtil;
+import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.NumberUtil;
+
+import java.util.Set;
+
 /********************************************************************************
  *
  * Title: 
@@ -14,8 +20,11 @@ public class Test {
 
     @org.junit.Test
     public void should_dd(){
-        Sun sun=new Sun();
-        sun.show();
+//        Sun sun=new Sun();
+//        sun.show();
+
+
+        Set<Class<?>> classSet= ClassUtil.scanPackage("thread");
 
 
     }

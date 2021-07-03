@@ -1,5 +1,6 @@
 package test;
 
+import cn.hutool.core.util.HashUtil;
 import com.google.common.collect.Lists;
 import designpattern.builder.Person;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
 import java.net.InetSocketAddress;
+import java.net.URI;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -294,46 +296,44 @@ public class NormalTest {
 
 
     @Test
-    public void test15(){
-        List<String> list= Lists.newLinkedList();
+    public void test15() {
+        List<String> list = Lists.newLinkedList();
         list.add("1");
         list.add("2");
         list.add("3");
         System.out.println(list.get(2));
 
     }
+
     @Test
-    public void  test()throws Exception{
-        System.out.println(1.13-0.82);
+    public void test() throws Exception {
+        System.out.println(1.13 - 0.82);
     }
 
     @Test
-    public void test17(){
-        String a=new String("abc");
-        String b=new String("abc");
-        String c="abc";
-        System.out.println(a==c);
+    public void test17() {
+        String a = new String("abc");
+        String b = new String("abc");
+        String c = "abc";
+        System.out.println(a == c);
 
     }
+
     @Test
-    public void test27(){
-        int a=10;
-        Integer b=new Integer(10);
-        Integer c=new Integer(10);
-        System.out.println(a==b);
-        System.out.println(b==c);
+    public void test27() {
+        int a = 10;
+        Integer b = new Integer(10);
+        Integer c = new Integer(10);
+        System.out.println(a == b);
+        System.out.println(b == c);
         System.out.println(b.getClass());
 
 
-
     }
 
 
-
-
-
     @Test
-    public void test87()throws Exception{
+    public void test87() throws Exception {
         System.out.println(this.getClass());
         System.out.println(this.getClass().getClassLoader());
         System.out.println(this.getClass().getClassLoader().getParent());
@@ -342,28 +342,31 @@ public class NormalTest {
     }
 
     @Test
-    public void t1est87()throws Exception{
-        System.out.println(10*24*60*60*1000);
+    public void t1est87() throws Exception {
+        System.out.println(10 * 24 * 60 * 60 * 1000);
     }
+
     @Test
-    public void should_1(){
-        long time=System.currentTimeMillis();
+    public void should_1() {
+        long time = System.currentTimeMillis();
         System.out.println(String.valueOf(time).length());
 
     }
+
     @Test
-    public void should_map(){
-        Map<String,String> map=new HashMap<>();
-        System.out.println(map.putIfAbsent("1","1"));
-        System.out.println(map.putIfAbsent("1","1"));
+    public void should_map() {
+        Map<String, String> map = new HashMap<>();
+        System.out.println(map.putIfAbsent("1", "1"));
+        System.out.println(map.putIfAbsent("1", "1"));
 
     }
+
     @Test
     public void should_range() {
-        IntStream.range(1,10).filter(i->i>5).forEach(System.out::print);
+        IntStream.range(1, 10).filter(i -> i > 5).forEach(System.out::print);
 
         for (int i = 0; i < 10; i++) {
-            if (i==5){
+            if (i == 5) {
                 break;
             }
 
@@ -372,28 +375,106 @@ public class NormalTest {
     }
 
     @Test
-    public void should_pow(){
-        Object result=Math.pow(6, 0.61) / (4 + 5);
+    public void should_pow() {
+        Object result = Math.pow(6, 0.61) / (4 + 5);
         System.out.println(result);
 
 
     }
 
     @Test
-    public void should_tes(){
-        String re="下'";
-        String name="name";
-        String result=String.format("g.V().has('%s','%s').limit(200)", name, re);
+    public void should_tes() {
+        String re = "下'";
+        String name = "name";
+        String result = String.format("g.V().has('%s','%s').limit(200)", name, re);
         System.out.println(result);
 
 
     }
 
     @Test
-    public void should_tes1(){
-       String a="a,";
-       List<String> ol=Arrays.asList(a.split(","));
-       ol.forEach(System.out::println);
+    public void should_tes1() {
+        String r = "ws://127.0.0.1:9090/test";
+        URI uri = URI.create(r);
+        System.out.println(uri.toASCIIString());
+        System.out.println(uri.toString());
+    }
+
+    @Test
+    public void should_tes21() {
+        List<String> stringList=Stream.of("1","2","3","4","5","6","7","8").collect(Collectors.toList());
+        System.out.println(combine(stringList,2));
+
+
+    }
+    @Test
+    public void should_new(){
+
+       String a="SaTiVersion=9999";
+       System.out.println(a.substring(12));
+    }
+
+
+    @Test
+    public void should_hash(){
+        String a="chenliming";
+        System.out.println(a.hashCode());
+        System.out.println(HashUtil.oneByOneHash(a));
+        System.out.println(HashUtil.oneByOneHash(a));
+        System.out.println(HashUtil.fnvHash(a));
+
+    }
+
+    @Test
+    public void should_oi(){
+        List<String> list=Stream.of("1","2","3","4").collect(Collectors.toList());
+        List<String> newList=new ArrayList<>();
+        newList.addAll(list);
+        list=null;
+        newList.forEach(System.out::print);
+
+    }
+
+    public static <T> List<List<T>> combine(List<T> list, int num) {
+        List<List<T>> retList = new ArrayList();
+        int count = list.size();
+        int nbit = 1 << count;
+
+        for(int i = 0; i < nbit; ++i) {
+            List<T> itemList = new ArrayList();
+
+            for(int j = 0; j < count; ++j) {
+                if ((i & 1 << j) != 0) {
+                    itemList.add(list.get(j));
+                }
+            }
+
+            if (itemList.size() == num) {
+                retList.add(itemList);
+            }
+        }
+
+        return retList;
+    }
+    
+    @Test
+    public void should_y(){
+        System.out.println(16<<2);
+    
+    }
+
+    @Test
+    public void should_ddddd(){
+      System.out.println(Integer.valueOf('鱁'));
+
+    }
+
+    @Test
+    public void should_dd(){
+        String result="eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyNDI0MDk4MCwiZXhwIjoxNjI0MzI3MzgwfQ.XpFNThmJUa0505ZRRossyugYOekT0Wt2GcWarQElVdHSbHdSh6SrBtYF02JRoyclZ-prdL4IPUwRlijOUGCjTTuwKkiUyb8-nVU-CKynV6g0ZELpVpL4jnkR0KqRw_fZfhU2k6FxN_u2igPG8XamiXtw5L4t8TZcX_cJ0fsaVVE";
+        int hr=HashUtil.fnvHash(result);
+        System.out.println(hr);
+
     }
 
 
